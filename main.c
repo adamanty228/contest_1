@@ -59,9 +59,18 @@ float find_discriminant(const float a_loc, const float b_loc, const float c_loc)
     return b_loc * b_loc - 4 * a_loc * c_loc;
 }
 
+int is_zero(const float num)
+{
+    if (fabs(num) < 1e-7)
+    {
+        return 1;
+    }
+    return 0;
+}
+
 float fix_zero(float ans) // Чтобы избежать ситуаций, когда корень равен -0.000000
 {
-    if (fabs(ans) < 0.0000001)
+    if (is_zero(ans) & (ans < 0))
     {
         return fabs(ans);
     }
@@ -70,13 +79,13 @@ float fix_zero(float ans) // Чтобы избежать ситуаций, ко�
 
 int solve(const float loc_a, const float loc_b, const float loc_c, float *loc_arr)
 {
-    float eps = 0.0000001;
+    float eps = 1e-7;
     float disc = find_discriminant(loc_a, loc_b, loc_c);
-    if (fabs(loc_a) < eps)
+    if (is_zero(loc_a))
     {
-        if (fabs(loc_b) < eps)
+        if (is_zero(loc_b))
         {
-            if (fabs(loc_c) < eps)
+            if (is_zero(loc_c))
             {
                 return -1;
             }
@@ -95,15 +104,16 @@ int solve(const float loc_a, const float loc_b, const float loc_c, float *loc_ar
     {
         return 0;
     }
-    else if (fabs(disc) < eps)
+    else if (is_zero(disc))
     {
         loc_arr[0] = fix_zero(-loc_b / (2 * loc_a));
         return 1;
     }
     else
     {
-        loc_arr[0] = fix_zero((-loc_b - sqrt(disc)) / (2 * loc_a));
-        loc_arr[1] = fix_zero((-loc_b + sqrt(disc)) / (2 * loc_a));
+        float sqrt_from_disc = sqrt(disc);
+        loc_arr[0] = fix_zero((-loc_b - sqrt_from_disc) / (2 * loc_a));
+        loc_arr[1] = fix_zero((-loc_b + sqrt_from_disc) / (2 * loc_a));
         return 2;
     }
 }
