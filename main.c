@@ -61,7 +61,8 @@ float find_discriminant(const float a_loc, const float b_loc, const float c_loc)
 
 int is_zero(const float num)
 {
-    if (fabs(num) < 1e-7)
+    float eps = 1e-7;
+    if (fabs(num) < eps)
     {
         return 1;
     }
@@ -79,7 +80,6 @@ float fix_zero(float ans) // Чтобы избежать ситуаций, ко�
 
 int solve(const float loc_a, const float loc_b, const float loc_c, float *loc_arr)
 {
-    float eps = 1e-7;
     float disc = find_discriminant(loc_a, loc_b, loc_c);
     if (is_zero(loc_a))
     {
@@ -113,6 +113,7 @@ int solve(const float loc_a, const float loc_b, const float loc_c, float *loc_ar
     {
         float sqrt_from_disc = sqrt(disc);
         float loc_a_twice = loc_a * 2;
+        
         loc_arr[0] = fix_zero((-loc_b - sqrt_from_disc) / loc_a_twice);
         loc_arr[1] = fix_zero((-loc_b + sqrt_from_disc) / loc_a_twice);
         return 2;
