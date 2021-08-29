@@ -112,8 +112,9 @@ int solve(const float loc_a, const float loc_b, const float loc_c, float *loc_ar
     else
     {
         float sqrt_from_disc = sqrt(disc);
-        loc_arr[0] = fix_zero((-loc_b - sqrt_from_disc) / (2 * loc_a));
-        loc_arr[1] = fix_zero((-loc_b + sqrt_from_disc) / (2 * loc_a));
+        float loc_a_twice = loc_a * 2;
+        loc_arr[0] = fix_zero((-loc_b - sqrt_from_disc) / loc_a_twice);
+        loc_arr[1] = fix_zero((-loc_b + sqrt_from_disc) / loc_a_twice);
         return 2;
     }
 }
