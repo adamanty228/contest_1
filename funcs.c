@@ -117,17 +117,25 @@ int solve(const float loc_a, const float loc_b, const float loc_c, float *loc_ar
         return 0;
     }
 
+
+    else if (is_zero(loc_c))
+    {
+        if (is_zero(loc_b))
+        {
+            loc_arr[0] = 0.0;
+            return 1;
+        }
+
+        loc_arr[0] = 0.0;
+        loc_arr[1] = -(loc_b / loc_a);
+        return 2;
+    }
+
+
     else if (is_zero(disc))
     {
         loc_arr[0] = fix_zero(-loc_b / (2 * loc_a));
         return 1;
-    }
-
-    else if (is_zero(loc_c))
-    {
-        loc_arr[0] = 0.0;
-        loc_arr[1] = -(loc_b / loc_a);
-        return 2;
     }
 
     else
