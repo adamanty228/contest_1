@@ -3,11 +3,32 @@
 #include <math.h>
 
 int big_is_digit(const char* input) {
+    int minus_counter = 0;
+    int dot_counter = 0;
     for (int i = 0; input[i] != '\0'; i++)
     {
-        if (((isdigit(input[i])) == 0) & (input[i] != '.') & (input[i] != '-'))
+        if ((isdigit(input[i])) == 0)
         {
-            return 0;
+            if (input[i] != '.')
+            {
+                dot_counter++;
+                if (dot_counter > 1)
+                {
+                    return 0;
+                }
+            }
+            else if (input[i] != '-')
+            {
+                minus_counter++;
+                if (minus_counter > 1)
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
     return 1;
